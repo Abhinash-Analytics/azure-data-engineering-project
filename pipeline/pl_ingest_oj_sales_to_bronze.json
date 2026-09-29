@@ -1,0 +1,296 @@
+{
+	"name": "pl_ingest_oj_sales_to_bronze",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_OJ_Sales_To_Bronze",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "rownames",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rownames",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Purchase",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Purchase",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "WeekofPurchase",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "WeekofPurchase",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "StoreID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "StoreID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PriceCH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PriceCH",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PriceMM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PriceMM",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DiscCH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DiscCH",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DiscMM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DiscMM",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SpecialCH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SpecialCH",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SpecialMM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SpecialMM",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LoyalCH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LoyalCH",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SalePriceMM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SalePriceMM",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SalePriceCH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SalePriceCH",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PriceDiff",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PriceDiff",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Store7",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Store7",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PctDiscMM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PctDiscMM",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PctDiscCH",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PctDiscCH",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ListPriceDiff",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ListPriceDiff",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "STORE",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_source_oj_sales",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_bronze_csv",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

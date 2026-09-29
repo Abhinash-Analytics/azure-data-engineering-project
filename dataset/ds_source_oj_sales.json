@@ -1,0 +1,100 @@
+{
+	"name": "ds_source_oj_sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Microsoft OJ Sales Simulated dataset.csv",
+				"fileSystem": "source"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "rownames",
+				"type": "String"
+			},
+			{
+				"name": "Purchase",
+				"type": "String"
+			},
+			{
+				"name": "WeekofPurchase",
+				"type": "String"
+			},
+			{
+				"name": "StoreID",
+				"type": "String"
+			},
+			{
+				"name": "PriceCH",
+				"type": "String"
+			},
+			{
+				"name": "PriceMM",
+				"type": "String"
+			},
+			{
+				"name": "DiscCH",
+				"type": "String"
+			},
+			{
+				"name": "DiscMM",
+				"type": "String"
+			},
+			{
+				"name": "SpecialCH",
+				"type": "String"
+			},
+			{
+				"name": "SpecialMM",
+				"type": "String"
+			},
+			{
+				"name": "LoyalCH",
+				"type": "String"
+			},
+			{
+				"name": "SalePriceMM",
+				"type": "String"
+			},
+			{
+				"name": "SalePriceCH",
+				"type": "String"
+			},
+			{
+				"name": "PriceDiff",
+				"type": "String"
+			},
+			{
+				"name": "Store7",
+				"type": "String"
+			},
+			{
+				"name": "PctDiscMM",
+				"type": "String"
+			},
+			{
+				"name": "PctDiscCH",
+				"type": "String"
+			},
+			{
+				"name": "ListPriceDiff",
+				"type": "String"
+			},
+			{
+				"name": "STORE",
+				"type": "String"
+			}
+		]
+	}
+}
