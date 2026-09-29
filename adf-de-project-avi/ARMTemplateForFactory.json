@@ -1,0 +1,472 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-de-project-avi"
+		},
+		"ls_adls_gen2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://stdeprojectavi2026.dfs.core.windows.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_ingest_oj_sales_to_bronze')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_OJ_Sales_To_Bronze",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "rownames",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "rownames",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Purchase",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Purchase",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WeekofPurchase",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "WeekofPurchase",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "StoreID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "StoreID",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PriceCH",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PriceCH",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PriceMM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PriceMM",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DiscCH",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DiscCH",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DiscMM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DiscMM",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SpecialCH",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SpecialCH",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SpecialMM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SpecialMM",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LoyalCH",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "LoyalCH",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SalePriceMM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SalePriceMM",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SalePriceCH",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SalePriceCH",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PriceDiff",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PriceDiff",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Store7",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Store7",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PctDiscMM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PctDiscMM",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PctDiscCH",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PctDiscCH",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ListPriceDiff",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ListPriceDiff",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "STORE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "STORE",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_oj_sales",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_bronze_csv",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_oj_sales')]",
+				"[concat(variables('factoryId'), '/datasets/ds_bronze_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_bronze_csv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adls_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "bronze"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adls_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_source_oj_sales')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adls_gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Microsoft OJ Sales Simulated dataset.csv",
+						"fileSystem": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "rownames",
+						"type": "String"
+					},
+					{
+						"name": "Purchase",
+						"type": "String"
+					},
+					{
+						"name": "WeekofPurchase",
+						"type": "String"
+					},
+					{
+						"name": "StoreID",
+						"type": "String"
+					},
+					{
+						"name": "PriceCH",
+						"type": "String"
+					},
+					{
+						"name": "PriceMM",
+						"type": "String"
+					},
+					{
+						"name": "DiscCH",
+						"type": "String"
+					},
+					{
+						"name": "DiscMM",
+						"type": "String"
+					},
+					{
+						"name": "SpecialCH",
+						"type": "String"
+					},
+					{
+						"name": "SpecialMM",
+						"type": "String"
+					},
+					{
+						"name": "LoyalCH",
+						"type": "String"
+					},
+					{
+						"name": "SalePriceMM",
+						"type": "String"
+					},
+					{
+						"name": "SalePriceCH",
+						"type": "String"
+					},
+					{
+						"name": "PriceDiff",
+						"type": "String"
+					},
+					{
+						"name": "Store7",
+						"type": "String"
+					},
+					{
+						"name": "PctDiscMM",
+						"type": "String"
+					},
+					{
+						"name": "PctDiscCH",
+						"type": "String"
+					},
+					{
+						"name": "ListPriceDiff",
+						"type": "String"
+					},
+					{
+						"name": "STORE",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adls_gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_adls_gen2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ls_adls_gen2_properties_typeProperties_url')]"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
