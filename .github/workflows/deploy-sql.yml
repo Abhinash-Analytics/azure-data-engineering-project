@@ -1,0 +1,55 @@
+name: Deploy SQL Control Table
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "sql/**"
+      - ".github/workflows/deploy-sql.yml"
+
+jobs:
+  deploy-sql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install sqlcmd
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mssql-tools18 unixodbc-dev
+          echo "/opt/mssql-tools18/bin" >> $GITHUB_PATH
+
+      - name: Create control table
+        env:
+          SQL_SERVER: ${{ secrets.SQL_SERVER }}
+          SQL_DATABASE: ${{ secrets.SQL_DATABASE }}
+          SQL_USERNAME: ${{ secrets.SQL_USERNAME }}
+          SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+        run: |
+          sqlcmd \
+            -S "$SQL_SERVER" \
+            -d "$SQL_DATABASE" \
+            -U "$SQL_USERNAME" \
+            -P "$SQL_PASSWORD" \
+            -C \
+            -b \
+            -i sql/schema/001_create_etl_control.sql
+
+      - name: Seed control metadata
+        env:
+          SQL_SERVER: ${{ secrets.SQL_SERVER }}
+          SQL_DATABASE: ${{ secrets.SQL_DATABASE }}
+          SQL_USERNAME: ${{ secrets.SQL_USERNAME }}
+          SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+        run: |
+          sqlcmd \
+            -S "$SQL_SERVER" \
+            -d "$SQL_DATABASE" \
+            -U "$SQL_USERNAME" \
+            -P "$SQL_PASSWORD" \
+            -C \
+            -b \
+            -i sql/seed/001_seed_oj_sales.sql
