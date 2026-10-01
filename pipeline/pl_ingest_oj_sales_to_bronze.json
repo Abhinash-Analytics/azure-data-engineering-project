@@ -293,7 +293,13 @@
 				"outputs": [
 					{
 						"referenceName": "ds_bronze_csv",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"p_folder_path": {
+								"value": "@concat(\n  'oj_sales/ingestion_date=',\n  formatDateTime(utcnow(),'yyyy-MM-dd')\n)",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			},
