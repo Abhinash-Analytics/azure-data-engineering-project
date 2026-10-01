@@ -1,4 +1,4 @@
-IF OBJECT_ID('dbo.etl_file_history', 'U') IS NULL
+IF OBJECT_ID('dbo.etl_file_history', 'U') IS NULL 
 BEGIN
     CREATE TABLE dbo.etl_file_history
     (
