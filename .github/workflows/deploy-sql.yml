@@ -45,8 +45,6 @@ jobs:
           SQL_USERNAME: ${{ secrets.SQL_USERNAME }}
           SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
         run: |
-          for file in sql/schema/*.sql; do 
-          echo "Executing $file"
           sqlcmd \
             -S "$SQL_SERVER" \
             -d "$SQL_DATABASE" \
@@ -54,5 +52,22 @@ jobs:
             -P "$SQL_PASSWORD" \
             -C \
             -b \
-            -i "$file"
+            -i sql/seed/001_seed_oj_sales.sql
+      - name: Deploy SQL schema
+        env:
+          SQL_SERVER: ${{ secrets.SQL_SERVER }}
+          SQL_DATABASE: ${{ secrets.SQL_DATABASE }}
+          SQL_USERNAME: ${{ secrets.SQL_USERNAME }}
+          SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+        run: |
+          for file in sql/schema/*.sql; do
+            echo "Executing $file"
+            sqlcmd \
+              -S "$SQL_SERVER" \
+              -d "$SQL_DATABASE" \
+              -U "$SQL_USERNAME" \
+              -P "$SQL_PASSWORD" \
+              -C \
+              -b \
+              -i "$file"
           done
