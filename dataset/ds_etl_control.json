@@ -1,0 +1,68 @@
+{
+	"name": "ds_etl_control",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_control",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pipeline_name",
+				"type": "varchar"
+			},
+			{
+				"name": "source_system",
+				"type": "varchar"
+			},
+			{
+				"name": "source_object",
+				"type": "varchar"
+			},
+			{
+				"name": "watermark_column",
+				"type": "varchar"
+			},
+			{
+				"name": "watermark_value",
+				"type": "varchar"
+			},
+			{
+				"name": "last_run_id",
+				"type": "varchar"
+			},
+			{
+				"name": "last_run_status",
+				"type": "varchar"
+			},
+			{
+				"name": "last_run_start_time",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "last_success_time",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "rows_processed",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "error_message",
+				"type": "varchar"
+			},
+			{
+				"name": "is_active",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "etl_control"
+		}
+	}
+}

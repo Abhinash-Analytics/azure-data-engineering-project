@@ -5,7 +5,14 @@
 			{
 				"name": "Copy_OJ_Sales_To_Bronze",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Lookup_Watermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -289,6 +296,31 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Lookup_Watermark",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT watermark_value\nFROM dbo.etl_control\nWHERE pipeline_name = 'pl_ingest_oj_sales_to_bronze'\n  AND source_object = 'Microsoft OJ Sales Simulated dataset.csv'\n  AND is_active = 1;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "ds_etl_control",
+						"type": "DatasetReference"
+					}
+				}
 			}
 		],
 		"annotations": []
