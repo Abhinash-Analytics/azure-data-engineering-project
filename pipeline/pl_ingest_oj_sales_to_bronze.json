@@ -72,7 +72,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "@concat(\n  'SELECT COUNT(*) AS processed_count\n   FROM dbo.etl_file_history\n   WHERE pipeline_name = ''pl_ingest_oj_sales_to_bronze''\n   AND source_file_name = ''',\n   item().name,\n   '''\n   AND ''',activity('Get_Metadata_Current_File').output.lastModified,'''\n   AND status = ''Succeeded'';'\n)",
+										"value": "@concat(\n  'SELECT COUNT(*) AS processed_count\n   FROM dbo.etl_file_history\n   WHERE pipeline_name = ''pl_ingest_oj_sales_to_bronze''\n   AND source_file_name = ''',\n   item().name,\n   '''\n   AND file_modified_time = ''',activity('Get_Metadata_Current_File').output.lastModified,'''\n   AND status = ''Succeeded'';'\n)",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
