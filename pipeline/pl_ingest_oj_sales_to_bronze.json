@@ -3,309 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_OJ_Sales_To_Bronze",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Lookup_Watermark",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".csv"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "rownames",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "rownames",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Purchase",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Purchase",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "WeekofPurchase",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "WeekofPurchase",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "StoreID",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "StoreID",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "PriceCH",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "PriceCH",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "PriceMM",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "PriceMM",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "DiscCH",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DiscCH",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "DiscMM",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DiscMM",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "SpecialCH",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "SpecialCH",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "SpecialMM",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "SpecialMM",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "LoyalCH",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "LoyalCH",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "SalePriceMM",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "SalePriceMM",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "SalePriceCH",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "SalePriceCH",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "PriceDiff",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "PriceDiff",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Store7",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Store7",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "PctDiscMM",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "PctDiscMM",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "PctDiscCH",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "PctDiscCH",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "ListPriceDiff",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "ListPriceDiff",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "STORE",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "STORE",
-									"type": "String",
-									"physicalType": "String"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "ds_source_oj_sales",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "ds_bronze_csv",
-						"type": "DatasetReference",
-						"parameters": {
-							"p_folder_path": {
-								"value": "@concat(\n  'oj_sales/ingestion_date=',\n  formatDateTime(utcnow(),'yyyy-MM-dd')\n)",
-								"type": "Expression"
-							}
-						}
-					}
-				]
-			},
-			{
-				"name": "Lookup_Watermark",
-				"type": "Lookup",
+				"name": "Get_Metadata_Source_Files",
+				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -316,16 +15,242 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT watermark_value\nFROM dbo.etl_control\nWHERE pipeline_name = 'pl_ingest_oj_sales_to_bronze'\n  AND source_object = 'Microsoft OJ Sales Simulated dataset.csv'\n  AND is_active = 1;",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
 					"dataset": {
-						"referenceName": "ds_etl_control",
+						"referenceName": "ds_source_oj_sales",
 						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
 					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get_Metadata_Source_Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get_Metadata_Source_Files').output.childItems",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Lookup_File_History",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Get_Metadata_Current_File",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "@concat(\n  'SELECT COUNT(*) AS processed_count\n   FROM dbo.etl_file_history\n   WHERE pipeline_name = ''pl_ingest_oj_sales_to_bronze''\n   AND source_file_name = ''',\n   item().name,\n   '''\n   AND ''',activity('Get_Metadata_Current_File').output.lastModified,'''\n   AND status = ''Succeeded'';'\n)",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_etl_file_history",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "If Condition1",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Lookup_File_History",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@equals(\r\n  int(activity('Lookup_File_History').output.firstRow.processed_count),\r\n  0\r\n)",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Copy_OJ_Sales_To_Bronze",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "DelimitedTextSource",
+												"storeSettings": {
+													"type": "AzureBlobFSReadSettings",
+													"recursive": true,
+													"enablePartitionDiscovery": false
+												},
+												"formatSettings": {
+													"type": "DelimitedTextReadSettings"
+												}
+											},
+											"sink": {
+												"type": "DelimitedTextSink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												},
+												"formatSettings": {
+													"type": "DelimitedTextWriteSettings",
+													"quoteAllText": true,
+													"fileExtension": ".txt"
+												}
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "ds_source_oj_sales",
+												"type": "DatasetReference",
+												"parameters": {
+													"p_file_name": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "ds_bronze_csv",
+												"type": "DatasetReference",
+												"parameters": {
+													"p_folder_path": {
+														"value": "@concat(\n  'oj_sales/ingestion_date=',\n  formatDateTime(utcnow(),'yyyy-MM-dd')\n)",
+														"type": "Expression"
+													},
+													"p_file_name": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
+											}
+										]
+									},
+									{
+										"name": "Script_Log_File_Success",
+										"type": "Script",
+										"dependsOn": [
+											{
+												"activity": "Copy_OJ_Sales_To_Bronze",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"linkedServiceName": {
+											"referenceName": "ls_sql_control",
+											"type": "LinkedServiceReference"
+										},
+										"typeProperties": {
+											"scripts": [
+												{
+													"type": "Query",
+													"text": {
+														"value": "@concat(\n'INSERT INTO dbo.etl_file_history\n(\n    pipeline_name,\n    source_file_name,\n    source_path,\n    file_modified_time,\n    processed_time,\n    run_id,\n    status,\n    rows_processed\n)\nVALUES\n(\n    ''pl_ingest_oj_sales_to_bronze'',\n    ''', item().name, ''',\n    ''source'',\n    ''', activity('Get_Metadata_Current_File').output.lastModified, ''',\n    SYSUTCDATETIME(),\n    ''', pipeline().RunId, ''',\n    ''Succeeded'',\n    ', string(activity('Copy_OJ_Sales_To_Bronze').output.rowsCopied), '\n);'\n)",
+														"type": "Expression"
+													}
+												}
+											],
+											"scriptBlockExecutionTimeout": "02:00:00"
+										}
+									}
+								]
+							}
+						},
+						{
+							"name": "Get_Metadata_Current_File",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "ds_source_oj_sales",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_file_name": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								},
+								"fieldList": [
+									"lastModified"
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
