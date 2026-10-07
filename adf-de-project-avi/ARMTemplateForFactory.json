@@ -7,9 +7,25 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-de-project-avi"
 		},
+		"ls_sql_control_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_sql_control'"
+		},
 		"ls_adls_gen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stdeprojectavi2026.dfs.core.windows.net/"
+		},
+		"ls_sql_control_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-de-project-avi.database.windows.net"
+		},
+		"ls_sql_control_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sqldb-de-control"
+		},
+		"ls_sql_control_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Abhi_admin"
 		}
 	},
 	"variables": {
@@ -23,8 +39,8 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy_OJ_Sales_To_Bronze",
-						"type": "Copy",
+						"name": "Get_Metadata_Source_Files",
+						"type": "GetMetadata",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -35,282 +51,288 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".csv"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "rownames",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "rownames",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Purchase",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Purchase",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "WeekofPurchase",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "WeekofPurchase",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "StoreID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "StoreID",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PriceCH",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PriceCH",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PriceMM",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PriceMM",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DiscCH",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "DiscCH",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DiscMM",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "DiscMM",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "SpecialCH",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "SpecialCH",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "SpecialMM",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "SpecialMM",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "LoyalCH",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "LoyalCH",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "SalePriceMM",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "SalePriceMM",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "SalePriceCH",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "SalePriceCH",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PriceDiff",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PriceDiff",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Store7",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Store7",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PctDiscMM",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PctDiscMM",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PctDiscCH",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PctDiscCH",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ListPriceDiff",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "ListPriceDiff",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "STORE",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "STORE",
-											"type": "String",
-											"physicalType": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
+							"dataset": {
 								"referenceName": "ds_source_oj_sales",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"p_file_name": {
+										"value": "@''",
+										"type": "Expression"
+									}
+								}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Get_Metadata_Source_Files",
+								"dependencyConditions": [
+									"Succeeded"
+								]
 							}
 						],
-						"outputs": [
-							{
-								"referenceName": "ds_bronze_csv",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Get_Metadata_Source_Files').output.childItems",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Lookup_File_History",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "Get_Metadata_Current_File",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"sqlReaderQuery": {
+												"value": "@concat(\n  'SELECT COUNT(*) AS processed_count\n   FROM dbo.etl_file_history\n   WHERE pipeline_name = ''pl_ingest_oj_sales_to_bronze''\n   AND source_file_name = ''',\n   item().name,\n   '''\n   AND file_modified_time = ''',activity('Get_Metadata_Current_File').output.lastModified,'''\n   AND status = ''Succeeded'';'\n)",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "ds_etl_file_history",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									}
+								},
+								{
+									"name": "If Condition1",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "Lookup_File_History",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@equals(\r\n  int(activity('Lookup_File_History').output.firstRow.processed_count),\r\n  0\r\n)",
+											"type": "Expression"
+										},
+										"ifTrueActivities": [
+											{
+												"name": "Copy_OJ_Sales_To_Bronze",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "DelimitedTextSource",
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": true,
+															"enablePartitionDiscovery": false
+														},
+														"formatSettings": {
+															"type": "DelimitedTextReadSettings"
+														}
+													},
+													"sink": {
+														"type": "DelimitedTextSink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														},
+														"formatSettings": {
+															"type": "DelimitedTextWriteSettings",
+															"quoteAllText": true,
+															"fileExtension": ".txt"
+														}
+													},
+													"enableStaging": false,
+													"translator": {
+														"type": "TabularTranslator",
+														"typeConversion": true,
+														"typeConversionSettings": {
+															"allowDataTruncation": true,
+															"treatBooleanAsNumber": false
+														}
+													}
+												},
+												"inputs": [
+													{
+														"referenceName": "ds_source_oj_sales",
+														"type": "DatasetReference",
+														"parameters": {
+															"p_file_name": {
+																"value": "@item().name",
+																"type": "Expression"
+															}
+														}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "ds_bronze_csv",
+														"type": "DatasetReference",
+														"parameters": {
+															"p_folder_path": {
+																"value": "@concat(\n  'oj_sales/ingestion_date=',\n  formatDateTime(utcnow(),'yyyy-MM-dd')\n)",
+																"type": "Expression"
+															},
+															"p_file_name": {
+																"value": "@item().name",
+																"type": "Expression"
+															}
+														}
+													}
+												]
+											},
+											{
+												"name": "Script_Log_File_Success",
+												"type": "Script",
+												"dependsOn": [
+													{
+														"activity": "Copy_OJ_Sales_To_Bronze",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"linkedServiceName": {
+													"referenceName": "ls_sql_control",
+													"type": "LinkedServiceReference"
+												},
+												"typeProperties": {
+													"scripts": [
+														{
+															"type": "Query",
+															"text": {
+																"value": "@concat(\n'INSERT INTO dbo.etl_file_history\n(\n    pipeline_name,\n    source_file_name,\n    source_path,\n    file_modified_time,\n    processed_time,\n    run_id,\n    status,\n    files_written,\n    data_written_bytes\n)\nVALUES\n(\n    ''pl_ingest_oj_sales_to_bronze'',\n    ''', item().name, ''',\n    ''source'',\n    ''', activity('Get_Metadata_Current_File').output.lastModified, ''',\n    SYSUTCDATETIME(),\n    ''', pipeline().RunId, ''',\n    ''Succeeded'',\n    ''',activity('Copy_OJ_Sales_To_Bronze').output.filesWritten,''',\n    ''',activity('Copy_OJ_Sales_To_Bronze').output.dataWritten,'''\n);'\n)",
+																"type": "Expression"
+															}
+														}
+													],
+													"scriptBlockExecutionTimeout": "02:00:00"
+												}
+											},
+											{
+												"name": "Script_Log_File_Failure",
+												"type": "Script",
+												"dependsOn": [
+													{
+														"activity": "Copy_OJ_Sales_To_Bronze",
+														"dependencyConditions": [
+															"Failed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"linkedServiceName": {
+													"referenceName": "ls_sql_control",
+													"type": "LinkedServiceReference"
+												},
+												"typeProperties": {
+													"scripts": [
+														{
+															"type": "Query",
+															"text": {
+																"value": "@concat(\n'INSERT INTO dbo.etl_file_history\n(\n    pipeline_name,\n    source_file_name,\n    source_path,\n    file_modified_time,\n    processed_time,\n    run_id,\n    status,\n    error_message\n)\nVALUES\n(\n    ''pl_ingest_oj_sales_to_bronze'',\n    ''', item().name, ''',\n    ''source'',\n    ''', activity('Get_Metadata_Current_File').output.lastModified, ''',\n    SYSUTCDATETIME(),\n    ''', pipeline().RunId, ''',\n    ''Failed'',\n    ''',replace(string(activity('Copy_OJ_Sales_To_Bronze').error.message),'''',''''''),'''\n);'\n)",
+																"type": "Expression"
+															}
+														}
+													],
+													"scriptBlockExecutionTimeout": "02:00:00"
+												}
+											}
+										]
+									}
+								},
+								{
+									"name": "Get_Metadata_Current_File",
+									"type": "GetMetadata",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataset": {
+											"referenceName": "ds_source_oj_sales",
+											"type": "DatasetReference",
+											"parameters": {
+												"p_file_name": {
+													"value": "@item().name",
+													"type": "Expression"
+												}
+											}
+										},
+										"fieldList": [
+											"lastModified"
+										],
+										"storeSettings": {
+											"type": "AzureBlobFSReadSettings",
+											"recursive": true,
+											"enablePartitionDiscovery": false
+										},
+										"formatSettings": {
+											"type": "DelimitedTextReadSettings"
+										}
+									}
+								}
+							]
+						}
 					}
 				],
 				"policy": {
@@ -320,7 +342,9 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_oj_sales')]",
-				"[concat(variables('factoryId'), '/datasets/ds_bronze_csv')]"
+				"[concat(variables('factoryId'), '/datasets/ds_etl_file_history')]",
+				"[concat(variables('factoryId'), '/datasets/ds_bronze_csv')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_control')]"
 			]
 		},
 		{
@@ -332,11 +356,27 @@
 					"referenceName": "ls_adls_gen2",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"p_folder_path": {
+						"type": "string"
+					},
+					"p_file_name": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().p_file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().p_folder_path",
+							"type": "Expression"
+						},
 						"fileSystem": "bronze"
 					},
 					"columnDelimiter": ",",
@@ -351,6 +391,140 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_etl_control')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_control",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pipeline_name",
+						"type": "varchar"
+					},
+					{
+						"name": "source_system",
+						"type": "varchar"
+					},
+					{
+						"name": "source_object",
+						"type": "varchar"
+					},
+					{
+						"name": "watermark_column",
+						"type": "varchar"
+					},
+					{
+						"name": "watermark_value",
+						"type": "varchar"
+					},
+					{
+						"name": "last_run_id",
+						"type": "varchar"
+					},
+					{
+						"name": "last_run_status",
+						"type": "varchar"
+					},
+					{
+						"name": "last_run_start_time",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "last_success_time",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "rows_processed",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "error_message",
+						"type": "varchar"
+					},
+					{
+						"name": "is_active",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "etl_control"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_control')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_etl_file_history')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_control",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pipeline_name",
+						"type": "varchar"
+					},
+					{
+						"name": "source_file_name",
+						"type": "varchar"
+					},
+					{
+						"name": "source_path",
+						"type": "varchar"
+					},
+					{
+						"name": "file_modified_time",
+						"type": "datetime2",
+						"scale": 3
+					},
+					{
+						"name": "processed_time",
+						"type": "datetime2",
+						"scale": 3
+					},
+					{
+						"name": "run_id",
+						"type": "varchar"
+					},
+					{
+						"name": "status",
+						"type": "varchar"
+					},
+					{
+						"name": "rows_processed",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "error_message",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "etl_file_history"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_control')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_source_oj_sales')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -359,12 +533,20 @@
 					"referenceName": "ls_adls_gen2",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"p_file_name": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "Microsoft OJ Sales Simulated dataset.csv",
+						"fileName": {
+							"value": "@dataset().p_file_name",
+							"type": "Expression"
+						},
 						"fileSystem": "source"
 					},
 					"columnDelimiter": ",",
@@ -464,6 +646,28 @@
 				"type": "AzureBlobFS",
 				"typeProperties": {
 					"url": "[parameters('ls_adls_gen2_properties_typeProperties_url')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_sql_control')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ls_sql_control_properties_typeProperties_server')]",
+					"database": "[parameters('ls_sql_control_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_sql_control_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_sql_control_password')]"
+					}
 				}
 			},
 			"dependsOn": []

@@ -7,9 +7,25 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-de-project-avi"
 		},
+		"ls_sql_control_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_sql_control'"
+		},
 		"ls_adls_gen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stdeprojectavi2026.dfs.core.windows.net/"
+		},
+		"ls_sql_control_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-de-project-avi.database.windows.net"
+		},
+		"ls_sql_control_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sqldb-de-control"
+		},
+		"ls_sql_control_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Abhi_admin"
 		},
 		"containerUri": {
 			"type": "string",
@@ -38,8 +54,20 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ls_sql_control_password": {
+						"value": "[parameters('ls_sql_control_password')]"
+					},
 					"ls_adls_gen2_properties_typeProperties_url": {
 						"value": "[parameters('ls_adls_gen2_properties_typeProperties_url')]"
+					},
+					"ls_sql_control_properties_typeProperties_server": {
+						"value": "[parameters('ls_sql_control_properties_typeProperties_server')]"
+					},
+					"ls_sql_control_properties_typeProperties_database": {
+						"value": "[parameters('ls_sql_control_properties_typeProperties_database')]"
+					},
+					"ls_sql_control_properties_typeProperties_userName": {
+						"value": "[parameters('ls_sql_control_properties_typeProperties_userName')]"
 					}
 				}
 			},

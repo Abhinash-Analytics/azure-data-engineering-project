@@ -5,8 +5,20 @@
 		"factoryName": {
 			"value": "adf-de-project-avi"
 		},
+		"ls_sql_control_password": {
+			"value": ""
+		},
 		"ls_adls_gen2_properties_typeProperties_url": {
 			"value": "https://stdeprojectavi2026.dfs.core.windows.net/"
+		},
+		"ls_sql_control_properties_typeProperties_server": {
+			"value": "sql-de-project-avi.database.windows.net"
+		},
+		"ls_sql_control_properties_typeProperties_database": {
+			"value": "sqldb-de-control"
+		},
+		"ls_sql_control_properties_typeProperties_userName": {
+			"value": "Abhi_admin"
 		}
 	}
 }
