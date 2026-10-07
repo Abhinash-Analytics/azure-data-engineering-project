@@ -1,9 +1,12 @@
 ALTER TABLE dbo.etl_file_history
-DROP CONSTRAINT PK_etl_file_history;
+ALTER COLUMN run_id VARCHAR(100) NOT NULL;
 
 ALTER TABLE dbo.etl_file_history
-ADD attempt_id BIGINT IDENTITY(1,1) NOT NULL;
-
-ALTER TABLE dbo.etl_file_history
-ADD CONSTRAINT PK_etl_file_history
-PRIMARY KEY (attempt_id);
+ADD CONSTRAINT UQ_etl_file_history_attempt
+UNIQUE
+(
+    pipeline_name,
+    source_file_name,
+    file_modified_time,
+    run_id
+);
