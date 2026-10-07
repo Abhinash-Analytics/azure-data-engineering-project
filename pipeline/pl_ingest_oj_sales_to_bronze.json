@@ -17,13 +17,20 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "ds_source_oj_sales",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"p_file_name": {
+								"value": "@''",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
 						"childItems"
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -204,7 +211,43 @@
 												{
 													"type": "Query",
 													"text": {
-														"value": "@concat(\n'INSERT INTO dbo.etl_file_history\n(\n    pipeline_name,\n    source_file_name,\n    source_path,\n    file_modified_time,\n    processed_time,\n    run_id,\n    status,\n    rows_processed\n)\nVALUES\n(\n    ''pl_ingest_oj_sales_to_bronze'',\n    ''', item().name, ''',\n    ''source'',\n    ''', activity('Get_Metadata_Current_File').output.lastModified, ''',\n    SYSUTCDATETIME(),\n    ''', pipeline().RunId, ''',\n    ''Succeeded'',\n    ', string(activity('Copy_OJ_Sales_To_Bronze').output.rowsCopied), '\n);'\n)",
+														"value": "@concat(\n'INSERT INTO dbo.etl_file_history\n(\n    pipeline_name,\n    source_file_name,\n    source_path,\n    file_modified_time,\n    processed_time,\n    run_id,\n    status,\n    files_written,\n    data_written_bytes\n)\nVALUES\n(\n    ''pl_ingest_oj_sales_to_bronze'',\n    ''', item().name, ''',\n    ''source'',\n    ''', activity('Get_Metadata_Current_File').output.lastModified, ''',\n    SYSUTCDATETIME(),\n    ''', pipeline().RunId, ''',\n    ''Succeeded'',\n    ''',activity('Copy_OJ_Sales_To_Bronze').output.filesWritten,''',\n    ''',activity('Copy_OJ_Sales_To_Bronze').output.dataWritten,'''\n);'\n)",
+														"type": "Expression"
+													}
+												}
+											],
+											"scriptBlockExecutionTimeout": "02:00:00"
+										}
+									},
+									{
+										"name": "Script_Log_File_Failure",
+										"type": "Script",
+										"dependsOn": [
+											{
+												"activity": "Copy_OJ_Sales_To_Bronze",
+												"dependencyConditions": [
+													"Failed"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"linkedServiceName": {
+											"referenceName": "ls_sql_control",
+											"type": "LinkedServiceReference"
+										},
+										"typeProperties": {
+											"scripts": [
+												{
+													"type": "Query",
+													"text": {
+														"value": "@concat(\n'INSERT INTO dbo.etl_file_history\n(\n    pipeline_name,\n    source_file_name,\n    source_path,\n    file_modified_time,\n    processed_time,\n    run_id,\n    status,\n    error_message\n)\nVALUES\n(\n    ''pl_ingest_oj_sales_to_bronze'',\n    ''', item().name, ''',\n    ''source'',\n    ''', activity('Get_Metadata_Current_File').output.lastModified, ''',\n    SYSUTCDATETIME(),\n    ''', pipeline().RunId, ''',\n    ''Failed'',\n    ''',replace(string(activity('Copy_OJ_Sales_To_Bronze').error.message),'''',''''''),'''\n);'\n)",
 														"type": "Expression"
 													}
 												}
@@ -243,6 +286,7 @@
 								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
